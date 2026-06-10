@@ -57,5 +57,6 @@ jobs:
             set net:timeout 30;
             set net:max-retries 3;
             open -u $FTP_USERNAME,$FTP_PASSWORD ftp://$FTP_HOST;
-            mirror -R --delete --parallel=5 --verbose ./dist/ dev/;
+            cd dev;
+            mirror -R --delete --parallel=5 --verbose ./dist/ .;
           "
