@@ -71,7 +71,8 @@
 
 - [ ] **1. Hero 영상 교체**
   - 디자인팀 영상 전달 대기 중
-  - 전달받으면 기존 `hero-background.mp4` 삭제 후 동일 파일명으로 교체
+  - 영상은 `img-prod.smpay.co.kr` CloudFront로 서빙 예정 (TODO 주석 추가됨)
+  - S3 버킷에 `searchm/` 폴더 생성 후 `hero-background.mp4` 업로드 필요
 
 - [x] **2. SMPay 섹션 이동** — `Service` → `Company` 하단으로 이동 완료
   - [ ] 섹션 디자인 및 구성 일부 변경 (새 파일 전달 후 반영)
@@ -81,18 +82,19 @@
   - 배열 구조 변경
   - imageKey 방식은 기존 Claude 적용 방식 유지
 
-- [ ] **4. Service 섹션 자동 전환 추가**
-  - 5초마다 다음 서비스 자동 노출
-  - 클릭 시 타이머 리셋
+- [x] **4. Service 섹션 자동 전환 추가** — 5초 자동 전환 + 클릭 시 타이머 리셋 완료
 
 - [ ] **5. Contact Us EmailJS 키값 변경**
   - dev 키 → prod 키로 교체
   - GitHub Secrets도 함께 업데이트 필요
+  - prod 키값 확인 필요 (EmailJS 대시보드)
 
 #### 기존 개선 작업
 
 - [x] Portfolio 모달 ESC 키 닫기
 - [x] 페이지 타이틀 수정 (Google AI Studio → searchM)
+- [x] Google Analytics GA4 태그 추가 (G-BKXFR6957W) — React + PHP 둘 다 적용
+- [x] GitHub Actions FTP 배포 스텝 주석 처리 (에러 방지, AWS 전환 후 활성화)
 - [ ] Header 스크롤 감지 — 스크롤 시 shadow, active nav 하이라이트
 - [ ] 모바일 Header 메뉴 슬라이드 애니메이션
 - [ ] Clients 마퀴 CSS infinite 방식으로 교체
@@ -150,6 +152,8 @@ Phase 4  도메인 전환 → 운영 배포    ⏳ Cloudflare 확인 후
 ## 메모
 
 - 카페24 FTP는 국내 IP만 허용 → GitHub Actions(해외 IP) 배포 불가
-- 로컬 배포는 `./deploy-dev.sh` 스크립트로 가능
+- 로컬 배포는 `./deploy-dev.sh` 스크립트로 가능 (lftp 설치 필요: `brew install lftp`)
 - EmailJS 키는 `VITE_` prefix로 클라이언트 노출 → 장기적으로 서버사이드 처리 고려
 - `searchm.cafe24.com` 도메인도 카페24에 연결되어 있음
+- Hero 영상 CloudFront 예정 경로: `https://img-prod.smpay.co.kr/searchm/hero-background.mp4`
+- PHP 백업본 GA 태그도 업데이트 완료 (`searchm-rollback/index.html`, `main.html`)
