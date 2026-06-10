@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { BarChart3, FileText, Target, Laptop, Smartphone, LineChart } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const services = [
   { 
@@ -37,6 +37,27 @@ const services = [
 
 export default function Service() {
   const [activeService, setActiveService] = useState(services[0]);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const startTimer = () => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      setActiveService(prev => {
+        const nextIndex = (services.findIndex(s => s.id === prev.id) + 1) % services.length;
+        return services[nextIndex];
+      });
+    }, 5000);
+  };
+
+  useEffect(() => {
+    startTimer();
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+  }, []);
+
+  const handleClick = (svc: typeof services[0]) => {
+    setActiveService(svc);
+    startTimer();
+  };
 
   return (
     <>
@@ -73,7 +94,7 @@ export default function Service() {
                 return (
                   <div 
                     key={svc.id} 
-                    onClick={() => setActiveService(svc)}
+                    onClick={() => handleClick(svc)}
                     className="flex flex-col items-center gap-3 group cursor-pointer relative"
                   >
                     <div className={`w-16 h-16 rounded-full border flex items-center justify-center transition-all duration-300 transform group-hover:scale-110 ${isActive ? 'bg-primary border-primary shadow-lg shadow-primary/30' : 'bg-white/5 border-gray-500/50 group-hover:bg-primary/80 group-hover:border-primary'}`}>
