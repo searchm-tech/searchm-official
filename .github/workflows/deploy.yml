@@ -32,6 +32,20 @@ jobs:
       - name: Install lftp
         run: sudo apt-get install -y lftp
 
+      - name: Debug FTP directory structure
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          lftp -c "
+            set ftp:ssl-allow no;
+            set net:timeout 30;
+            open -u $FTP_USERNAME,$FTP_PASSWORD ftp://$FTP_HOST;
+            pwd;
+            ls;
+          "
+
       - name: Deploy to FTP (/dev)
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }}
