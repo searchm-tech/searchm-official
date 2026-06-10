@@ -54,6 +54,8 @@ jobs:
         run: |
           lftp -c "
             set ftp:ssl-allow no;
+            set ftp:passive-mode on;
+            set ftp:use-feat false;
             set net:timeout 30;
             set net:max-retries 3;
             open -u $FTP_USERNAME,$FTP_PASSWORD ftp://$FTP_HOST;
