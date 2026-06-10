@@ -1,6 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { TrendingUp, Users, Briefcase, Cpu } from 'lucide-react';
+
+function SmpayImg({ defaultUrl, alt = '', className = '' }: { defaultUrl: string; alt?: string; className?: string }) {
+  const [src, setSrc] = useState('');
+
+  useEffect(() => {
+    setSrc(`${import.meta.env.BASE_URL}logos/SMPay.png`);
+  }, []);
+
+  if (!src) return null;
+
+  return (
+    <img
+      src={src}
+      alt={alt}
+      referrerPolicy="no-referrer"
+      className={className}
+      onError={() => setSrc(defaultUrl)}
+    />
+  );
+}
 
 const cards = [
   {
@@ -200,6 +220,68 @@ export default function Company() {
             </div>
           </div>
         </motion.div>
+      </div>
+    </section>
+
+    {/* SMPay Section */}
+    <section id="smpay" className="py-24 bg-white border-t border-gray-100">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-6xl mx-auto text-left grid lg:grid-cols-2 gap-16 items-center">
+
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="space-y-6"
+          >
+            <div className="inline-block px-3 py-1 bg-primary/10 text-primary font-bold rounded-full text-xs tracking-wider">
+              TECH SOLUTION
+            </div>
+            <h3 className="text-3xl md:text-4xl font-black text-gray-900 leading-tight">
+              광고비 선결제 및 <br/>
+              광고 성과 최적화 솔루션, <br/>
+              <span className="text-primary">SMPay</span>
+            </h3>
+            <p className="text-gray-600 md:text-lg leading-relaxed">
+              SMPay는 AI 기반 광고 매출 최대화 솔루션으로, 광고 성과(ROAS) 연동 광고비 자동 증감을 통해 대행사의 별도 결제 요청 없이도 안정적인 성과와 매출 성장을 동시에 이끌어냅니다.
+            </p>
+            <ul className="space-y-4 pt-2">
+              <li className="flex items-center gap-3 text-gray-800 font-medium">
+                <div className="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-sm font-bold">1</div>
+                광고 예산 선충전 및 추가 지원
+              </li>
+              <li className="flex items-center gap-3 text-gray-800 font-medium">
+                <div className="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-sm font-bold">2</div>
+                투명한 실시간 정산 및 통합 리포팅
+              </li>
+            </ul>
+            <div className="pt-4">
+              <a
+                href="https://smpay.co.kr/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block px-8 py-4 bg-primary hover:bg-primary/90 text-white font-bold rounded-xl transition-colors shadow-md shadow-primary/30"
+              >
+                SMPay 살펴보기
+              </a>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="relative w-full aspect-square md:aspect-[4/3] lg:aspect-square bg-gray-50 rounded-[3rem] overflow-hidden shadow-inner p-8 flex items-center justify-center border border-gray-100"
+          >
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#f9f3ef] to-[#f4f7fa] opacity-50 z-0"></div>
+            <SmpayImg
+              defaultUrl="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&q=80&w=800"
+              alt="SMPay Solution Dashboard"
+              className="w-full h-full object-contain rounded-2xl shadow-2xl relative z-10 hover:scale-105 transition-transform duration-700 bg-white"
+            />
+          </motion.div>
+
+        </div>
       </div>
     </section>
   </>);
