@@ -11,7 +11,8 @@ export default function Hero() {
           playsInline
           className="w-full h-full object-cover opacity-80"
         >
-          <source src="https://img-prod.smpay.co.kr/searchm/hero-background.mp4" type="video/mp4" />
+          {/* TODO: CloudFront로 교체 예정 → https://img-prod.smpay.co.kr/searchm/hero-background.mp4 */}
+          <source src={`${import.meta.env.BASE_URL}logos/hero-background.mp4`} type="video/mp4" />
         </video>
       </div>
       
