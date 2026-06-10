@@ -29,36 +29,16 @@ jobs:
           VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
           VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
 
-      - name: Install lftp
-        run: sudo apt-get install -y lftp
-
-      - name: Debug FTP directory structure
+      - name: Deploy to FTP (/dev) via curl
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }}
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
         run: |
-          lftp -c "
-            set ftp:ssl-allow no;
-            set net:timeout 30;
-            open -u $FTP_USERNAME,$FTP_PASSWORD ftp://$FTP_HOST;
-            pwd;
-            ls;
-          "
-
-      - name: Deploy to FTP (/dev)
-        env:
-          FTP_HOST: ${{ secrets.FTP_HOST }}
-          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-        run: |
-          lftp -c "
-            set ftp:ssl-allow no;
-            set ftp:passive-mode on;
-            set ftp:use-feat false;
-            set net:timeout 30;
-            set net:max-retries 3;
-            open -u $FTP_USERNAME,$FTP_PASSWORD ftp://$FTP_HOST;
-            cd dev;
-            mirror -R --delete --parallel=5 --verbose ./dist/ .;
-          "
+          find ./dist -type f | while read file; do
+            remote_path="${file#./dist/}"
+            curl --ftp-create-dirs \
+              --user "$FTP_USERNAME:$FTP_PASSWORD" \
+              --upload-file "$file" \
+              "ftp://$FTP_HOST/dev/$remote_path"
+          done
