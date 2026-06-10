@@ -29,16 +29,17 @@ jobs:
           VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
           VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
 
-      - name: Deploy to FTP (/dev) via curl
-        env:
-          FTP_HOST: ${{ secrets.FTP_HOST }}
-          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-        run: |
-          find ./dist -type f | while read file; do
-            remote_path="${file#./dist/}"
-            curl --ftp-create-dirs \
-              --user "$FTP_USERNAME:$FTP_PASSWORD" \
-              --upload-file "$file" \
-              "ftp://$FTP_HOST/dev/$remote_path"
-          done
+      # TODO: AWS S3 배포로 교체 예정 (Cloudflare 확인 후 활성화)
+      # - name: Deploy to FTP (/dev) via curl
+      #   env:
+      #     FTP_HOST: ${{ secrets.FTP_HOST }}
+      #     FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+      #     FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+      #   run: |
+      #     find ./dist -type f | while read file; do
+      #       remote_path="${file#./dist/}"
+      #       curl --ftp-create-dirs \
+      #         --user "$FTP_USERNAME:$FTP_PASSWORD" \
+      #         --upload-file "$file" \
+      #         "ftp://$FTP_HOST/dev/$remote_path"
+      #     done
