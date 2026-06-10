@@ -67,12 +67,39 @@
 ### Phase 2 — UI 개선 🔄 현재 진행
 > Cloudflare 확인 전까지 UI 작업 먼저 진행
 
-- [ ] Header 스크롤 감지 — 스크롤 시 shadow 강화, active nav 하이라이트
+#### 인수인계 작업 (우선순위 높음)
+
+- [ ] **1. Hero 영상 교체**
+  - 디자인팀 영상 전달 대기 중
+  - 전달받으면 기존 `hero-background.mp4` 삭제 후 동일 파일명으로 교체
+
+- [ ] **2. SMPay 섹션 이동 및 디자인 변경**
+  - 현재 위치: `Service` 섹션 하단
+  - 변경 위치: `Company` 섹션 하단으로 이동
+  - 섹션 디자인 및 구성 일부 변경
+
+- [ ] **3. 공식대행사 & 파트너사 영역 변경**
+  - 로고 및 이미지 변경
+  - 배열 구조 변경
+  - imageKey 방식은 기존 Claude 적용 방식 유지
+
+- [ ] **4. Service 섹션 자동 전환 추가**
+  - 5초마다 다음 서비스 자동 노출
+  - 클릭 시 타이머 리셋
+
+- [ ] **5. Contact Us EmailJS 키값 변경**
+  - dev 키 → prod 키로 교체
+  - GitHub Secrets도 함께 업데이트 필요
+
+#### 기존 개선 작업
+
+- [x] Portfolio 모달 ESC 키 닫기
+- [x] 페이지 타이틀 수정 (Google AI Studio → searchM)
+- [ ] Header 스크롤 감지 — 스크롤 시 shadow, active nav 하이라이트
 - [ ] 모바일 Header 메뉴 슬라이드 애니메이션
-- [ ] Portfolio 모달 ESC 키 닫기 (키보드 접근성)
-- [ ] Clients 마퀴 CSS infinite 방식으로 교체 (현재 고정 px 이동 방식)
-- [ ] 전화번호 통일 (Contact `02-2051-5620` vs Footer `02-3446-7260` 불일치 확인)
-- [ ] News 이미지 — Unsplash 스톡 → 실제 기사 썸네일로 교체
+- [ ] Clients 마퀴 CSS infinite 방식으로 교체
+- [ ] 전화번호 통일 (Contact `02-2051-5620` vs Footer `02-3446-7260`)
+- [ ] News 이미지 — Unsplash → 실제 기사 썸네일 교체
 - [ ] Company 카드 연수 표현 통일 ("17년" vs "18년")
 
 **로컬 배포 방법** (UI 확인용):
